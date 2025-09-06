@@ -1,41 +1,100 @@
+/* Reset some default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Body background and center chat */
 body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f9;
+    background-color: #f0f2f5;
     display: flex;
     justify-content: center;
-    padding: 40px;
+    align-items: center;
+    height: 100vh;
 }
+
+/* Chat container */
 .chat-container {
     width: 400px;
-    background: white;
+    max-width: 95%;
+    background-color: #fff;
     border-radius: 12px;
-    padding: 20px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 }
+
+/* Chat box */
 #chat-box {
-    height: 400px;
+    flex: 1;
+    padding: 20px;
     overflow-y: auto;
-    margin-bottom: 10px;
+    height: 400px;
 }
+
+/* User message styling */
 .user-msg {
-    text-align: right;
-    color: blue;
-    margin: 5px;
+    background-color: #0b93f6;
+    color: #fff;
+    padding: 10px 15px;
+    margin: 8px 0;
+    border-radius: 20px 20px 0 20px;
+    max-width: 80%;
+    align-self: flex-end;
+    word-wrap: break-word;
 }
+
+/* Bot message styling */
 .bot-msg {
-    text-align: left;
-    color: green;
-    margin: 5px;
+    background-color: #e5e5ea;
+    color: #000;
+    padding: 10px 15px;
+    margin: 8px 0;
+    border-radius: 20px 20px 20px 0;
+    max-width: 80%;
+    align-self: flex-start;
+    word-wrap: break-word;
 }
-input {
-    width: 70%;
-    padding: 8px;
-}
-button {
-    width: 25%;
-    padding: 8px;
-    background: #007bff;
-    color: white;
+
+/* Input and button container */
+input[type="text"] {
+    width: calc(100% - 70px);
+    padding: 12px 15px;
     border: none;
+    border-top: 1px solid #ddd;
+    outline: none;
+    font-size: 16px;
+}
+
+button {
+    width: 60px;
+    border: none;
+    background-color: #0b93f6;
+    color: #fff;
+    font-weight: bold;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #0666c0;
+}
+
+/* Input and button wrapper */
+.chat-container > input,
+.chat-container > button {
+    border-radius: 0;
+}
+
+/* Scrollbar style */
+#chat-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+#chat-box::-webkit-scrollbar-thumb {
+    background-color: rgba(0,0,0,0.2);
+    border-radius: 3px;
 }
