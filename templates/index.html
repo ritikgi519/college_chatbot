@@ -18,17 +18,25 @@
             let userInput = document.getElementById("user-input").value;
             let chatBox = document.getElementById("chat-box");
 
+            // Show user message
             chatBox.innerHTML += "<div class='user-msg'>" + userInput + "</div>";
 
+            // Send message to backend
             let response = await fetch("/get", {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
                 body: JSON.stringify({message: userInput})
             });
             let data = await response.json();
-            chatBox.innerHTML += "<div class='bot-msg'>" + data.reply + "</div>";
 
+            // Show bot response with line breaks
+            chatBox.innerHTML += "<div class='bot-msg'>" + data.reply.replace(/\n/g, "<br>") + "</div>";
+
+            // Clear input box
             document.getElementById("user-input").value = "";
+
+            // Scroll to bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
         }
     </script>
 </body>
