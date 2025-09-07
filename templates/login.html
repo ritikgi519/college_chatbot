@@ -7,22 +7,28 @@
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body class="login-body">
-  <div class="login-container">
-    <!-- College Logo -->
-    <img src="{{ url_for('static', filename='srms_logo.png') }}" alt="SRMS Logo" class="college-logo">
+  <div class="login-wrapper">
+    <div class="login-box">
+      <!-- College Logo -->
+      <img src="{{ url_for('static', filename='srms_logo.png') }}" alt="SRMS Logo" class="college-logo">
 
-    <!-- College Name -->
-    <h2>SRMS CET Bareilly</h2>
-    <p class="subtitle">Student & Faculty Login</p>
+      <!-- College Name -->
+      <h1 class="college-name">SRMS CET Bareilly</h1>
+      <p class="college-subtitle">Welcome to the Student & Faculty Portal</p>
 
-    <!-- Login Form -->
-    <form method="POST" action="/login">
-      <input type="text" name="username" placeholder="Enter Username" required>
-      <input type="password" name="password" placeholder="Enter Password" required>
-      <button type="submit">Login</button>
-    </form>
+      <!-- Login Form -->
+      {% if error %}
+        <p class="error">{{ error }}</p>
+      {% endif %}
+      <form method="POST" action="/login">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
 
-    <p class="note">Use <b>admin / admin123</b> to test.</p>
+      <!-- Test note -->
+      <p class="note">Use <b>admin / admin123</b> for demo login</p>
+    </div>
   </div>
 </body>
 </html>
