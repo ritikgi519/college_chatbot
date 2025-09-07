@@ -5,29 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SRMS CET Bareilly - Login</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body class="login-body">
   <div class="login-wrapper">
-    <div class="login-box">
+    <div class="login-card">
+      
       <!-- College Logo -->
       <img src="{{ url_for('static', filename='srms_logo.png') }}" alt="SRMS Logo" class="college-logo">
-
+      
       <!-- College Name -->
       <h1 class="college-name">SRMS CET Bareilly</h1>
-      <p class="college-subtitle">Welcome to the Student & Faculty Portal</p>
+      <p class="college-subtitle">Student & Faculty Portal</p>
 
       <!-- Login Form -->
       {% if error %}
         <p class="error">{{ error }}</p>
       {% endif %}
       <form method="POST" action="/login">
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="password" name="password" placeholder="Password" required>
+        <div class="input-group">
+          <input type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="input-group">
+          <input type="password" name="password" placeholder="Password" required>
+        </div>
         <button type="submit">Login</button>
       </form>
 
-      <!-- Test note -->
-      <p class="note">Use <b>admin / admin123</b> for demo login</p>
+      <p class="note">Use <b>admin / admin123</b> for demo</p>
     </div>
   </div>
 </body>

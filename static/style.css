@@ -1,44 +1,45 @@
-/* Background for login page */
+/* LOGIN PAGE STYLING */
 .login-body {
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  margin: 0;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #800000, #ffcc00); /* SRMS colors */
+  background: linear-gradient(135deg, #800000, #ffcc00);
+  font-family: 'Roboto', sans-serif;
 }
 
-/* Wrapper to center login */
 .login-wrapper {
+  width: 100%;
   display: flex;
   justify-content: center;
-  align-items: center;
-  width: 100%;
 }
 
-/* Login card */
-.login-box {
+.login-card {
   background: #fff;
+  border-radius: 15px;
   padding: 40px 30px;
-  border-radius: 12px;
-  text-align: center;
   width: 350px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  transition: transform 0.3s;
+}
+
+.login-card:hover {
+  transform: translateY(-5px);
 }
 
 /* Logo */
 .college-logo {
-  width: 90px;
+  width: 80px;
   margin-bottom: 15px;
 }
 
 /* College name */
 .college-name {
-  font-size: 22px;
-  font-weight: bold;
   color: #800000;
-  margin: 5px 0;
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 5px;
 }
 
 /* Subtitle */
@@ -48,30 +49,40 @@
   margin-bottom: 25px;
 }
 
-/* Inputs */
-.login-box input {
+/* Input */
+.input-group {
+  margin-bottom: 15px;
+}
+
+.input-group input {
   width: 100%;
-  padding: 12px;
-  margin: 10px 0;
+  padding: 12px 15px;
+  border-radius: 8px;
   border: 1px solid #ccc;
-  border-radius: 6px;
   font-size: 14px;
+  transition: border 0.3s;
+}
+
+.input-group input:focus {
+  border-color: #800000;
+  outline: none;
 }
 
 /* Button */
-.login-box button {
+.login-card button {
   width: 100%;
   padding: 12px;
-  background: #800000;
-  color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
+  background: #800000;
+  color: #fff;
   font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
-  transition: background 0.3s ease;
+  transition: background 0.3s;
 }
 
-.login-box button:hover {
+.login-card button:hover {
   background: #a60000;
 }
 
@@ -84,7 +95,7 @@
 
 /* Note */
 .note {
-  margin-top: 15px;
   font-size: 12px;
   color: #666;
+  margin-top: 10px;
 }
