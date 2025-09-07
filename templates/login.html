@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRMS CET Bareilly - Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+  <div class="login-container">
+    <!-- College Logo -->
+    <img src="{{ url_for('static', filename='srms_logo.png') }}" alt="SRMS Logo" class="college-logo">
+
+    <!-- College Name -->
+    <h2>SRMS CET Bareilly</h2>
+    <p class="subtitle">Student & Faculty Login</p>
+
+    <!-- Login Form -->
+    <form method="POST" action="/login">
+      <input type="text" name="username" placeholder="Enter Username" required>
+      <input type="password" name="password" placeholder="Enter Password" required>
+      <button type="submit">Login</button>
+    </form>
+
+    <p class="note">Use <b>admin / admin123</b> to test.</p>
+  </div>
+</body>
+</html>
