@@ -1,43 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>College Enquiry Chatbot</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>College Enquiry Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="chat-container">
-        <div id="chat-box"></div>
-        <input id="user-input" type="text" placeholder="Ask about courses, fees, admission...">
-        <button onclick="sendMessage()">Send</button>
+
+  <!-- Floating Chatbot Button -->
+  <div id="chat-toggle">💬</div>
+
+  <!-- Chatbot Container -->
+  <div class="chat-container" id="chat-container">
+    <div class="chat-header">
+      <span>🎓 College Enquiry Bot</span>
+      <button id="close-chat">✖</button>
     </div>
+    <div id="chat-box" class="chat-box"></div>
+    <div class="chat-input">
+      <input id="user-input" type="text" placeholder="Type your question...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
 
-    <script>
-        async function sendMessage() {
-            let userInput = document.getElementById("user-input").value;
-            let chatBox = document.getElementById("chat-box");
+  <script>
+    // Toggle Chat Window
+    document.getElementById("chat-toggle").onclick = function() {
+      document.getElementById("chat-container").style.display = "flex";
+      this.style.display = "none";
+    };
+    document.getElementById("close-chat").onclick = function() {
+      document.getElementById("chat-container").style.display = "none";
+      document.getElementById("chat-toggle").style.display = "block";
+    };
 
-            // Show user message
-            chatBox.innerHTML += "<div class='user-msg'>" + userInput + "</div>";
+    // Send Message Function
+    async function sendMessage() {
+      let userInput = document.getElementById("user-input").value.trim();
+      if (!userInput) return;
 
-            // Send message to backend
-            let response = await fetch("/get", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({message: userInput})
-            });
-            let data = await response.json();
+      let chatBox = document.getElementById("chat-box");
+      chatBox.innerHTML += `<div class='user-msg'>${userInput}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Show bot response with line breaks
-            chatBox.innerHTML += "<div class='bot-msg'>" + data.reply.replace(/\n/g, "<br>") + "</div>";
+      let response = await fetch("/get", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: userInput })
+      });
 
-            // Clear input box
-            document.getElementById("user-input").value = "";
+      let data = await response.json();
+      chatBox.innerHTML += `<div class='bot-msg'>${data.reply.replace(/\n/g, "<br>")}</div>`;
+      chatBox.scrollTop = chatBox.scrollHeight;
 
-            // Scroll to bottom
-            chatBox.scrollTop = chatBox.scrollHeight;
-        }
-    </script>
+      document.getElementById("user-input").value = "";
+    }
+  </script>
 </body>
 </html>
