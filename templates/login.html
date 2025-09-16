@@ -1,39 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SRMS CET Bareilly - Login</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <title>SRMS CET | Bareilly </title>
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+<link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Poppins&amp;display=swap'><link rel="stylesheet" href="./style.css">
 </head>
-<body class="login-body">
-  <div class="login-wrapper">
-    <div class="login-card">
-      
-      <!-- College Logo -->
-      <img src="{{ url_for('static', filename='srms_logo.png') }}" alt="SRMS Logo" class="college-logo">
-      
-      <!-- College Name -->
-      <h1 class="college-name">SRMS CET Bareilly</h1>
-      <p class="college-subtitle">Student & Faculty Portal</p>
+<body>
 
-      <!-- Login Form -->
-      {% if error %}
-        <p class="error">{{ error }}</p>
-      {% endif %}
-      <form method="POST" action="/login">
-        <div class="input-group">
-          <input type="text" name="username" placeholder="Username" required>
-        </div>
-        <div class="input-group">
-          <input type="password" name="password" placeholder="Password" required>
-        </div>
-        <button type="submit">Login</button>
-      </form>
-
-      <p class="note">Use <b>admin / admin123</b> for demo</p>
+<div class="wrapper">
+  <div class="login_box">
+    <div class="login-header">
+      <span>Login</span>
+    </div>
+    <div class="input_box">
+      <input type="text" id="user" class="input-field" required>
+      <label for="user" class="label">Username</label>
+      <i class="bx bx-user icon"></i>
+    </div>
+    <div class="input_box">
+      <input type="password" id="pass" class="input-field" required>
+      <label for="pass" class="label">Password</label>
+      <i class="bx bx-lock-alt icon"></i>
+    </div>
+    <div class="remember-forgot">
+      <div class="remember-me">
+        <input type="checkbox" id="remember">
+        <label for="remember">Remember me</label>
+      </div>
+      <div class="forgot">
+        <a href="#">Forgot password?</a>
+      </div>
+    </div>
+    <div class="input_box">
+      <input type="submit" class="input-submit" value="Login">
+    </div>
+    <div class="register">
+      <span>Don't have an account? <a href="#">Register</a></span>
     </div>
   </div>
+</div>
+
+  
 </body>
 </html>
