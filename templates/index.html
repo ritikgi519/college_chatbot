@@ -1,61 +1,341 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>College Enquiry Chatbot</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Enquiry AI Chatbot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header {
+            background: #1a2a6c;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+        }
+        
+        .header p {
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+        
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            padding: 20px;
+            background: #f5f7fb;
+        }
+        
+        .chat-message {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .bot-message {
+            justify-content: flex-start;
+        }
+        
+        .user-message {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            line-height: 1.4;
+        }
+        
+        .bot-message .message-content {
+            background: #e6e9ef;
+            border-top-left-radius: 4px;
+            color: #333;
+        }
+        
+        .user-message .message-content {
+            background: #1a2a6c;
+            color: white;
+            border-top-right-radius: 4px;
+        }
+        
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            background: #1a2a6c;
+            color: white;
+            font-size: 18px;
+        }
+        
+        .user-avatar {
+            background: #fdbb2d;
+        }
+        
+        .input-container {
+            display: flex;
+            padding: 15px;
+            background: white;
+            border-top: 1px solid #ddd;
+        }
+        
+        #user-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        #send-button {
+            width: 50px;
+            margin-left: 10px;
+            border: none;
+            background: #1a2a6c;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+            outline: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.3s;
+        }
+        
+        #send-button:hover {
+            background: #2a3a8c;
+        }
+        
+        .suggested-questions {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 10px 15px;
+            background: #f0f2f5;
+            border-top: 1px solid #ddd;
+        }
+        
+        .suggested-question {
+            background: #e6e9ef;
+            border: none;
+            border-radius: 18px;
+            padding: 8px 15px;
+            margin: 5px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .suggested-question:hover {
+            background: #d4d7dd;
+        }
+        
+        .timestamp {
+            font-size: 0.7rem;
+            text-align: right;
+            color: #777;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                border-radius: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <!-- Floating Chatbot Button -->
-  <div id="chat-toggle">💬</div>
-
-  <!-- Chatbot Container -->
-  <div class="chat-container" id="chat-container">
-    <div class="chat-header">
-      <span>🎓 College Enquiry Bot</span>
-      <button id="close-chat">✖</button>
+    <div class="container">
+        <div class="header">
+            <h1>College Enquiry AI Assistant</h1>
+            <p>Hello! I'm here to help with your college questions</p>
+        </div>
+        
+        <div class="chat-container" id="chat-container">
+            <div class="chat-message bot-message">
+                <div class="avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p>Hello! I'm your college enquiry assistant. How can I help you today?</p>
+                    <div class="timestamp">Just now</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="suggested-questions">
+            <button class="suggested-question">Admission requirements</button>
+            <button class="suggested-question">Courses offered</button>
+            <button class="suggested-question">Tuition fees</button>
+            <button class="suggested-question">Application deadline</button>
+        </div>
+        
+        <div class="input-container">
+            <input type="text" id="user-input" placeholder="Type your question here...">
+            <button id="send-button">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
     </div>
-    <div id="chat-box" class="chat-box"></div>
-    <div class="chat-input">
-      <input id="user-input" type="text" placeholder="Type your question...">
-      <button onclick="sendMessage()">Send</button>
-    </div>
-  </div>
 
-  <script>
-    // Toggle Chat Window
-    document.getElementById("chat-toggle").onclick = function() {
-      document.getElementById("chat-container").style.display = "flex";
-      this.style.display = "none";
-    };
-    document.getElementById("close-chat").onclick = function() {
-      document.getElementById("chat-container").style.display = "none";
-      document.getElementById("chat-toggle").style.display = "block";
-    };
-
-    // Send Message Function
-    async function sendMessage() {
-      let userInput = document.getElementById("user-input").value.trim();
-      if (!userInput) return;
-
-      let chatBox = document.getElementById("chat-box");
-      chatBox.innerHTML += `<div class='user-msg'>${userInput}</div>`;
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      let response = await fetch("/get", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: userInput })
-      });
-
-      let data = await response.json();
-      chatBox.innerHTML += `<div class='bot-msg'>${data.reply.replace(/\n/g, "<br>")}</div>`;
-      chatBox.scrollTop = chatBox.scrollHeight;
-
-      document.getElementById("user-input").value = "";
-    }
-  </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatContainer = document.getElementById('chat-container');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            const suggestedQuestions = document.querySelectorAll('.suggested-question');
+            
+            // Sample responses for different questions
+            const responses = {
+                'greeting': 'Hello! How can I assist with your college enquiry today?',
+                'admission': 'Admission requirements vary by program. Generally, we require a high school diploma, completed application form, and relevant test scores. Some programs may have additional requirements.',
+                'courses': 'We offer a wide range of undergraduate and graduate programs in Engineering, Business, Arts, Sciences, and Health Sciences. Is there a specific field you\'re interested in?',
+                'tuition': 'Tuition fees vary by program and student status. Undergraduate programs range from $5,000 to $7,000 per semester for full-time students. Financial aid and scholarships are available.',
+                'deadline': 'The application deadline for the Fall semester is June 30th, and for the Spring semester it\'s November 15th. International students are advised to apply at least one month earlier.',
+                'campus': 'Our campus features state-of-the-art facilities including modern classrooms, libraries, sports complexes, and student lounges. We also have on-campus housing options.',
+                'scholarship': 'We offer merit-based and need-based scholarships. The application process requires a separate form and supporting documents. The deadline for scholarship applications is May 15th.',
+                'default': 'I\'m sorry, I don\'t have information about that. Please contact the admissions office at admissions@college.edu or call (555) 123-4567 for more specific queries.'
+            };
+            
+            // Function to add a message to the chat
+            function addMessage(message, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = isUser ? 'chat-message user-message' : 'chat-message bot-message';
+                
+                const avatar = document.createElement('div');
+                avatar.className = isUser ? 'avatar user-avatar' : 'avatar';
+                avatar.innerHTML = isUser ? '<i class="fas fa-user"></i>' : '<i class="fas fa-robot"></i>';
+                
+                const messageContent = document.createElement('div');
+                messageContent.className = 'message-content';
+                
+                const messageText = document.createElement('p');
+                messageText.textContent = message;
+                
+                const timestamp = document.createElement('div');
+                timestamp.className = 'timestamp';
+                timestamp.textContent = getCurrentTime();
+                
+                messageContent.appendChild(messageText);
+                messageContent.appendChild(timestamp);
+                
+                messageDiv.appendChild(avatar);
+                messageDiv.appendChild(messageContent);
+                
+                chatContainer.appendChild(messageDiv);
+                
+                // Scroll to the bottom of the chat
+                chatContainer.scrollTop = chatContainer.scrollHeight;
+            }
+            
+            // Function to get current time in HH:MM format
+            function getCurrentTime() {
+                const now = new Date();
+                return `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+            }
+            
+            // Function to process user input and generate response
+            function processInput(input) {
+                input = input.toLowerCase();
+                
+                if (input.includes('hello') || input.includes('hi') || input.includes('hey')) {
+                    return responses['greeting'];
+                } else if (input.includes('admission') || input.includes('require') || input.includes('apply')) {
+                    return responses['admission'];
+                } else if (input.includes('course') || input.includes('program') || input.includes('major')) {
+                    return responses['courses'];
+                } else if (input.includes('tuition') || input.includes('fee') || input.includes('cost')) {
+                    return responses['tuition'];
+                } else if (input.includes('deadline') || input.includes('apply by') || input.includes('last date')) {
+                    return responses['deadline'];
+                } else if (input.includes('campus') || input.includes('facility') || input.includes('housing')) {
+                    return responses['campus'];
+                } else if (input.includes('scholarship') || input.includes('financial aid') || input.includes('funding')) {
+                    return responses['scholarship'];
+                } else {
+                    return responses['default'];
+                }
+            }
+            
+            // Function to handle sending a message
+            function sendMessage() {
+                const message = userInput.value.trim();
+                
+                if (message) {
+                    addMessage(message, true);
+                    userInput.value = '';
+                    
+                    // Simulate AI thinking with a delay
+                    setTimeout(() => {
+                        const response = processInput(message);
+                        addMessage(response, false);
+                    }, 1000);
+                }
+            }
+            
+            // Event listeners
+            sendButton.addEventListener('click', sendMessage);
+            
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+            
+            suggestedQuestions.forEach(button => {
+                button.addEventListener('click', function() {
+                    userInput.value = this.textContent;
+                    sendMessage();
+                });
+            });
+            
+            // Add initial bot message with a slight delay for effect
+            setTimeout(() => {
+                addMessage("You can ask me about admissions, courses, fees, deadlines, campus facilities, or scholarships.", false);
+            }, 500);
+        });
+    </script>
 </body>
 </html>
+
