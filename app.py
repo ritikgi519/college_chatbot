@@ -11,14 +11,7 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
 
-        # simple test login
-        if username == "admin" and password == "admin123":
-            session["user"] = username
-            return redirect(url_for("home"))
-        else:
-            return render_template("login.html", error="Invalid username or password")
-
-    return render_template("login.html")
+      
 
 
 # ---- Chatbot Home ----
