@@ -21,6 +21,27 @@
             align-items: center;
             padding: 20px;
         }
+
+        .logout-btn {
+            background: white;
+            position: absolute;
+            
+            display: flex;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: red;
+            border: none;
+        }
         
         .container {
             width: 100%;
@@ -186,6 +207,9 @@
     </style>
 </head>
 <body>
+    <a href="{{ url_for('logout') }}" class="logout-btn" title="Logout">
+        <i class="fa-solid fa-arrow-right-from-bracket"></i>
+    </a>
     <div class="container">
         <div class="header">
             <h1>College Enquiry AI Assistant</h1>
@@ -213,7 +237,7 @@
         
         <div class="input-container">
             <input type="text" id="user-input" placeholder="Type your question here...">
-            <button id="send-button">
+            <button id="send-button" title="Send">
                 <i class="fas fa-paper-plane"></i>
             </button>
         </div>

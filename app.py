@@ -7,9 +7,16 @@ app.secret_key = "srms_secret_key"   # needed for login session
 # ---- Login Page ----
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    print("Login route accessed", request.method)
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        print(f"Received credentials - Username: {username}, Password: {password}")
+        session["user"] = username
+        print("Login successful")
+        return redirect(url_for("home"))
+    else:
+        return render_template("login.html")
 
       
 
